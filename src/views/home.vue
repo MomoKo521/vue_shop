@@ -10,12 +10,18 @@
     </el-header>
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside width="200px">
+      <el-aside :width="isMenucollapse ? '60px ' : '200px'">
+        <!-- 菜单折叠 -->
+        <div class="Menucollapse" @click="toMenucollapse()">| | |</div>
         <!-- 侧边栏菜单 -->
         <el-menu
           background-color="#323743"
           text-color="#fff"
           active-text-color="#5685D0"
+          :collapse="isMenucollapse"
+          :collapse-transition="false"
+          :router="true"
+          :default-active="componentpaht"
         >
           <!-- 菜单模块区域 -->
           <el-submenu
@@ -26,15 +32,16 @@
             <!-- 一级菜单 -->
             <template slot="title">
               <!-- 一级菜单字体图标 -->
-              <i class="el-icon-s-custom"></i>
+              <i :class="iocnobj[item.id]"></i>
               <!-- 一级菜单文本 -->
               <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
             <el-menu-item
-              :index="subitem.id + ''"
+              :index="'/' + item.path"
               v-for="subitem in item.children"
               :key="subitem.id"
+              @click="activepaht('/' + item.path)"
             >
               <!-- 二级菜单字体图标 -->
               <i class="el-icon-menu"></i>
@@ -45,7 +52,9 @@
         </el-menu>
       </el-aside>
       <!-- 主题内容 -->
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -54,6 +63,7 @@
 export default {
   created() {
     this.getmenu()
+    this.componentpaht = window.sessionStorage.getItem('activepaht')
   },
   data() {
     return {
@@ -61,12 +71,16 @@ export default {
       menuList: [],
       // 侧边栏图标
       iocnobj: {
-        125: '',
-        103: '',
-        101: '',
-        102: '',
-        145: '',
+        125: 'el-icon-user-solid',
+        103: 'el-icon-box',
+        101: 'el-icon-s-goods',
+        102: 'el-icon-s-order',
+        145: 'el-icon-s-marketing',
       },
+      //菜单栏折叠切换
+      isMenucollapse: false,
+      // 组件路由
+      componentpaht: '',
     }
   },
   methods: {
@@ -85,7 +99,17 @@ export default {
       // 成功就赋值请求返回的数据
       this.menuList = res.data
       // console.log(res)
-      console.log(this.menuList)
+      // console.log(this.menuList)
+    },
+    // 折叠菜单栏
+    toMenucollapse() {
+      this.isMenucollapse = !this.isMenucollapse
+    },
+    // 存储点击菜单栏跳转路由
+    activepaht(val) {
+      // console.log(val)
+      window.sessionStorage.setItem('activepaht', val)
+      this.componentpaht = val
     },
   },
 }
@@ -110,11 +134,22 @@ export default {
 }
 .el-aside {
   background-color: #30353e;
+  .Menucollapse {
+    color: #fff;
+    font-size: 14px;
+    line-height: 36px;
+    background-color: #777a81;
+    text-align: center;
+    cursor: pointer;
+  }
 }
 .el-main {
   background-color: #e9edf0;
 }
 .Home_box {
   height: 100%;
+}
+.el-menu {
+  border: none;
 }
 </style>

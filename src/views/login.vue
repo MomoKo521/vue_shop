@@ -28,9 +28,7 @@
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="btns">
-          <el-button type="primary" :loading="loginLoading" @click="login"
-            >登录</el-button
-          >
+          <el-button type="primary" @click="login">登录</el-button>
           <el-button type="info" @click="resetLogin">重置</el-button>
         </el-form-item>
       </el-form>
@@ -49,7 +47,11 @@ export default {
       //效验表单数据
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
+          {
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur',
+          },
           {
             min: 3,
             max: 5,
@@ -58,7 +60,11 @@ export default {
           },
         ],
         password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' },
+          {
+            required: true,
+            message: '密码不能为空',
+            trigger: 'blur',
+          },
           {
             min: 6,
             max: 12,
@@ -100,7 +106,7 @@ export default {
 }
 </script>
 
-<style  lang="less"  scoped>
+<style lang="less" scoped>
 .login {
   background-color: #2b4b6b;
   height: 100%;
