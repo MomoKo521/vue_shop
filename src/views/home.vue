@@ -38,10 +38,10 @@
             </template>
             <!-- 二级菜单 -->
             <el-menu-item
-              :index="'/' + item.path"
+              :index="'/' + subitem.path"
               v-for="subitem in item.children"
               :key="subitem.id"
-              @click="activepaht('/' + item.path)"
+              @click="activepaht('/' + subitem.path)"
             >
               <!-- 二级菜单字体图标 -->
               <i class="el-icon-menu"></i>

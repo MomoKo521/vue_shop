@@ -18,7 +18,7 @@
           ><el-button type="primary" @click="isshowadduser=true">添加用户</el-button></el-col
         >
       </el-row>
-      <!-- 用户信息 -->
+      <!-- 用户信息 表格-->
       <el-table :data="usersList" :stripe="true" border>
         <el-table-column label="#" type="index"></el-table-column>
         <el-table-column prop="username" label="姓名"></el-table-column>
@@ -39,7 +39,7 @@
           <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteuser(scope.row.id)"></el-button>
           <!-- el-tooltip 文字提示 -->
           <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">
-          <el-button type="warning" icon="el-icon-s-tools" size="mini"></el-button>
+          <el-button type="warning" icon="el-icon-s-tools" size="mini" @click="getdistribute(scope.row)"></el-button>
           </el-tooltip>
           </template>
         </el-table-column>
@@ -106,7 +106,29 @@
     <el-button @click="updateuser">确 定</el-button>
   </span>
 </el-dialog>
-<!--  -->
+<!-- 分配角色窗口 -->
+
+<el-dialog
+  title="分配角色"
+  :visible.sync="setdialog"
+  width="30%"
+ >
+   <p>当前的用户：{{this.userinfos.username}}</p>
+   <p>当前的角色：{{this.userinfos.role_name}}</p>
+   <p> 
+    <el-select v-model="selectroleid" placeholder="请选择">
+    <el-option
+      v-for="item in rolesList"
+      :key="item.id"
+      :label="item.roleName"
+      :value="item.id">
+    </el-option>
+  </el-select></p>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="setdialog = false">取 消</el-button>
+    <el-button type="primary" @click='setselectroleid'>确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -174,6 +196,14 @@ export default {
           { validator: checkMobile, trigger: 'blur' },
         ],
       },
+      // 分配角色对话框
+      setdialog: false,
+      // 当前点击分配角色信息
+      userinfos: {},
+      // 角色列表
+      rolesList: {},
+      // 被角色列表slelect下拉框选中的值
+      selectroleid: '',
     }
   },
   methods: {
@@ -279,7 +309,7 @@ export default {
     // 删除用户
     async deleteuser(id) {
       const decision = await this.$confirm(
-        '此操作将永久用户, 是否继续?',
+        '此操作将永久删除用户, 是否继续?',
         '提示',
         {
           confirmButtonText: '确定',
@@ -303,6 +333,41 @@ export default {
       this.$message.success('删除用户成功')
       // 刷新用户列表
       this.getUsersList()
+    },
+    // 获取角色列表
+    async getdistribute(user) {
+      // 清空上次select值
+      this.selectroleid = ''
+      this.setdialog = true
+      // console.log(user)
+      this.userinfos = user
+      // 获取角色列表
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status == 200) {
+        this.rolesList = res.data
+        // console.log(this.rolesList)
+      }
+    },
+    // 点击确定按钮 分配角色
+    async setselectroleid() {
+      if (!this.selectroleid) {
+        return this.$message.error('请选择分配角色')
+      }
+      // 发生接口请求更新分配角色
+      const { data: res } = await this.$http.put(
+        `users/${this.userinfos.id}/role`,
+        {
+          rid: this.selectroleid,
+        }
+      )
+      if (res.meta.status !== 200) {
+        return this.$message.error('分配新角色失败')
+      }
+      this.$message.success('分配新角色成功')
+      // 刷新数据
+      this.getUsersList()
+      // 关闭分配角色对话框
+      this.setdialog = false
     },
   },
   created() {
