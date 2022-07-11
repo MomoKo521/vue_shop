@@ -16,11 +16,15 @@ axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1'
 Vue.prototype.$http = axios
     // 通过拦截器给其他接口添加token临牌(差不多就是每次发起axios请求都会把网页中的token值传到请求头中 根据token判断是否有权限发起请求)
 axios.interceptors.request.use(config => {
-    // 给请求添加一个Authorization权限  Authorization存在token值就能发起aixos请求
-    config.headers.Authorization = window.sessionStorage.getItem('token')
-        // console.log(config)
-    return config
-})
+        // 给请求添加一个Authorization权限  Authorization存在token值就能发起aixos请求
+        config.headers.Authorization = window.sessionStorage.getItem('token')
+            // console.log(config)
+        return config
+    })
+    //element 中并没有提供树形表格插件，所以需要依赖于第三方的插件。我们使用vue-table-with-tree-grid。
+    //用Vue.component注册为全局组件 
+import TreeTable from 'vue-table-with-tree-grid'
+Vue.component('tree-table', TreeTable)
 
 Vue.config.productionTip = false
 new Vue({

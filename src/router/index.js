@@ -4,8 +4,9 @@ import LOGIN from '@/views/login.vue' //登陆组件
 import HOME from '@/views/home.vue' //主页组件
 import USERS from '@/components/user/user.vue' //用户组件
 import WELCOME from '@/views/welcome.vue' //主页初始化组件
-import Rights from '@/components/power/Rights.vue' //权限管理权限列表组件
-import Roles from '@/components/power/Roles.vue' //权限管理角色列表组件
+import Rights from '@/components/power/Rights.vue' //权限管理/权限列表组件
+import Roles from '@/components/power/Roles.vue' //权限管理/角色列表组件
+import Cate from '@/components/goods/Cate.vue' //商品管理/商品分类组件
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,7 +20,8 @@ const routes = [
             { path: '/users', component: USERS },
             { path: '/welcome', component: WELCOME },
             { path: '/rights', component: Rights },
-            { path: '/roles', component: Roles }
+            { path: '/roles', component: Roles },
+            { path: '/categories', component: Cate }
         ]
     }
 ]
