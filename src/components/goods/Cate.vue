@@ -372,7 +372,7 @@ export default {
           return this.$message.error('删除分类失败')
         }
         this.$message.success('删除分类成功')
-        //刷新数据
+        // 刷新数据
         this.getCateList()
       } else if (is == 'cancel') {
         // 取消删除

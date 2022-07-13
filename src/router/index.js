@@ -7,6 +7,7 @@ import WELCOME from '@/views/welcome.vue' //主页初始化组件
 import Rights from '@/components/power/Rights.vue' //权限管理/权限列表组件
 import Roles from '@/components/power/Roles.vue' //权限管理/角色列表组件
 import Cate from '@/components/goods/Cate.vue' //商品管理/商品分类组件
+import Params from '@/components/goods/Params.vue' //商品管理/分类参数组件
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,7 +22,8 @@ const routes = [
             { path: '/welcome', component: WELCOME },
             { path: '/rights', component: Rights },
             { path: '/roles', component: Roles },
-            { path: '/categories', component: Cate }
+            { path: '/categories', component: Cate },
+            { path: '/params', component: Params }
         ]
     }
 ]
