@@ -8,6 +8,8 @@ import Rights from '@/components/power/Rights.vue' //权限管理/权限列表�
 import Roles from '@/components/power/Roles.vue' //权限管理/角色列表组件
 import Cate from '@/components/goods/Cate.vue' //商品管理/商品分类组件
 import Params from '@/components/goods/Params.vue' //商品管理/分类参数组件
+import List from '@/components/goods/List.vue' //商品管理/商品列表组件
+import addList from '@/components/goods/addList.vue' //商品管理/添加商品组件
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,12 +20,14 @@ const routes = [
         component: HOME,
         redirect: '/welcome',
         children: [
-            { path: '/users', component: USERS },
             { path: '/welcome', component: WELCOME },
+            { path: '/users', component: USERS },
             { path: '/rights', component: Rights },
             { path: '/roles', component: Roles },
             { path: '/categories', component: Cate },
-            { path: '/params', component: Params }
+            { path: '/params', component: Params },
+            { path: '/goods', component: List },
+            { path: '/addlist', component: addList }
         ]
     }
 ]
