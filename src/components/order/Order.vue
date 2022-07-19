@@ -130,7 +130,7 @@
 
 <script>
 //导入修改地址  的省市区/县 数据
-import cityData from '@/components/goods/citydata.js'
+import cityData from '@/components/order/citydata.js'
 export default {
   data() {
     return {
