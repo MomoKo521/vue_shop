@@ -348,14 +348,12 @@ export default {
         // console.log(form)
         // 发送添加商品请求
         const { data: res } = await this.$http.post('goods', form)
-        if (!res) {
-          this.$message.success('添加商品成功')
-          // 跳转到商品列表
-          this.$router.push('/goods')
-        }
         if (res.meta.status != 201) {
           this.$message.error('添加商品失败')
         }
+        // 这里不知道为什么请求成功没有返回结果 数据添加成功了    爆错倒是会有返回结果
+        this.$message.success('添加商品成功')
+        this.$router.push('/goods')
       })
     },
   },

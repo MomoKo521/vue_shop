@@ -10,6 +10,7 @@ import Cate from '@/components/goods/Cate.vue' //商品管理/商品分类组件
 import Params from '@/components/goods/Params.vue' //商品管理/分类参数组件
 import List from '@/components/goods/List.vue' //商品管理/商品列表组件
 import addList from '@/components/goods/addList.vue' //商品管理/添加商品组件
+import Order from '@/components/goods/Order.vue' //商品管理/商品订单管理组件
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,7 +28,8 @@ const routes = [
             { path: '/categories', component: Cate },
             { path: '/params', component: Params },
             { path: '/goods', component: List },
-            { path: '/addlist', component: addList }
+            { path: '/addlist', component: addList },
+            { path: '/orders', component: Order, }
         ]
     }
 ]
